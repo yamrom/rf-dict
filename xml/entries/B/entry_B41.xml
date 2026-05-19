@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Russian-French Dictionary of Idioms
+  Test entry: Б-41
+  Based on SL 2nd edition
+  Status: example French translation pending corpus verification
+-->
+
+<entry id="Б-41" sl_ref="Б-41" status="examples_pending">
+
+  <head_matter>
+    <canonical>
+      <text>БЕДА (НИКОГДА́) НЕ ПРИХОДИТ (НЕ ХОДИТ) ОДНА́</text>
+      <optional_element>НИКОГДА́</optional_element>
+      <optional_element>НЕ ХОДИТ</optional_element>
+    </canonical>
+    <variant>
+      <text>БЕДА́ В ОДИНО́ЧКУ НЕ ХОДИТ</text>
+    </variant>
+  </head_matter>
+
+  <grammar>
+    <phrase_type>saying</phrase_type>
+    <raw_grammar>[saying]</raw_grammar>
+  </grammar>
+
+  <sense n="1">
+
+    <definition lang="fr" type="full">
+      Se dit lorsque les malheurs et les épreuves s'enchaînent,
+      l'un semblant appeler l'autre, sans laisser de répit —
+      employé quand un premier malheur en entraîne un second.
+    </definition>
+
+    <french_equivalents>
+      <equiv register="prov" primary="true">
+        <text>un malheur ne vient jamais seul</text>
+      </equiv>
+      <equiv register="prov">
+        <text>quand le malheur entre, il ne vient pas seul</text>
+      </equiv>
+      <equiv register="cour">
+        <text>les malheurs s'accumulent</text>
+      </equiv>
+      <equiv register="cour">
+        <text>les ennuis s'enchaînent</text>
+      </equiv>
+      <equiv register="fam">
+        <text>les ennuis arrivent toujours en cascade</text>
+      </equiv>
+      <equiv register="fam">
+        <text>quand ça va mal, ça va vraiment mal</text>
+      </equiv>
+      <equiv register="sout">
+        <text>le sort s'acharne</text>
+      </equiv>
+      <equiv register="sout">
+        <text>les épreuves se succèdent sans relâche</text>
+      </equiv>
+    </french_equivalents>
+
+    <examples>
+      <example type="literary" n="1">
+        <ru>
+          Беда в одиночку сроду не ходит: утром, по недогляду
+          Гетька, племенной бугай Мирона Григорьевича распорол
+          рогом лучшей кобылице-матке шею… Рану промыли.
+          [Мирон Григорьевич] зашивал сам… Не успел Мирон
+          Григорьевич отойти от колодца, из куреня прибежала
+          Лукинична… Она отозвала мужа в сторону. «Наталья
+          пришла, Григорич!.. Ушёл зятёк из дому!»
+        </ru>
+        <fr status="published">
+          Un malheur ne vient jamais seul : le matin, par suite
+          d'une négligence de Guet-Baba, le taureau de race de
+          Miron Grigoriévitch avait blessé à l'encolure d'un coup
+          de corne sa meilleure jument poulinière… On lava la
+          plaie. [Miron Grigoriévitch] cousait lui-même… Il allait
+          s'éloigner du puits quand Loukinitchna arriva en courant
+          de la maison… Elle prit son mari à l'écart. « Natalia est
+          ici, Miron !… Notre gendre est parti de chez lui ! »
+        </fr>
+        <bibref>
+          <sl_code>Шолохов-2</sl_code>
+          <sl_suffix>2a</sl_suffix>
+          <ru_source>
+            <author>Шолохов Михаил Александрович</author>
+            <work>Тихий Дон</work>
+            <book_vol>книга первая</book_vol>
+          </ru_source>
+          <fr_source>
+            <author_fr>Cholokhov Mikhaïl</author_fr>
+            <work_fr>Le Don paisible</work_fr>
+            <translator>Antoine Vitez</translator>
+            <publisher>Julliard / Presses de la Cité</publisher>
+            <year>1959–1991</year>
+          </fr_source>
+        </bibref>
+      </example>
+    </examples>
+
+  </sense>
+
+</entry>

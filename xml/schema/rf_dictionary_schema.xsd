@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  XML Schema for Russian-French Dictionary of Idioms
+  Based on Lubensky's Russian-English Dictionary of Idioms (2nd ed.)
+  Adapted for Russian-French with register extensions
+  
+  Key adaptations from R-E to R-F:
+  - "english_equivalents" → "french_equivalents" with register attribute
+  - Usage labels preserved from SL; French-specific labels added
+  - Citation structure extended with French translation metadata
+  - Register system expanded: sout/litt/cour/fam/pop/arg
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- ============================================================
+       ROOT ELEMENT
+       ============================================================ -->
+  <xs:element name="dictionary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="entry" type="EntryType" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="edition" type="xs:string"/>
+      <xs:attribute name="lang_source" fixed="ru"/>
+      <xs:attribute name="lang_target" fixed="fr"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ============================================================
+       ENTRY — top-level dictionary entry
+       ============================================================ -->
+  <xs:complexType name="EntryType">
+    <xs:sequence>
+
+      <!-- 1. HEAD MATTER -->
+      <xs:element name="head_matter" type="HeadMatterType"/>
+
+      <!-- 2. GRAMMATICAL INFORMATION (in square brackets in SL) -->
+      <xs:element name="grammar" type="GrammarType"/>
+
+      <!-- 3. ONE OR MORE SENSES -->
+      <xs:element name="sense" type="SenseType" maxOccurs="unbounded"/>
+
+      <!-- 4. RELATED NOUN PHRASE (○ symbol in SL) — optional -->
+      <xs:element name="related_np" type="RelatedNPType" minOccurs="0"/>
+
+      <!-- 5. ETYMOLOGICAL / EXPLANATORY NOTE — optional -->
+      <xs:element name="etym_note" type="xs:string" minOccurs="0"/>
+
+    </xs:sequence>
+
+    <!-- Entry identifier matching SL letter-number code -->
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <!-- e.g. "Б-41" -->
+
+    <!-- Cross-reference to SL entry for traceability -->
+    <xs:attribute name="sl_ref" type="xs:string"/>
+
+    <!-- Pipeline processing status -->
+    <xs:attribute name="status">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="draft"/>
+          <xs:enumeration value="examples_pending"/>
+          <xs:enumeration value="review_required"/>
+          <xs:enumeration value="validated"/>
+          <xs:enumeration value="final"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+
+  </xs:complexType>
+
+  <!-- ============================================================
+       HEAD MATTER
+       ============================================================ -->
+  <xs:complexType name="HeadMatterType">
+    <xs:sequence>
+
+      <!-- Primary canonical form of the idiom -->
+      <xs:element name="canonical" type="HeadwordType"/>
+
+      <!-- Synonymous variants (also: / или:) -->
+      <xs:element name="variant" type="HeadwordType"
+                  minOccurs="0" maxOccurs="unbounded"/>
+
+      <!-- Also-entries (synonymous idiom with own entry) -->
+      <xs:element name="also" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="ref" type="xs:string"/>
+              <!-- ref points to the entry ID of the synonymous idiom -->
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================================================
+       HEADWORD — canonical form or variant
+       ============================================================ -->
+  <xs:complexType name="HeadwordType">
+    <xs:sequence>
+
+      <!-- The Russian text of the headword -->
+      <xs:element name="text" type="xs:string"/>
+
+      <!-- Optional elements shown in angle brackets ⟨ ⟩ -->
+      <xs:element name="optional_element" type="xs:string"
+                  minOccurs="0" maxOccurs="unbounded"/>
+
+      <!-- Stress marks — positions of stressed syllables -->
+      <xs:element name="stress" type="xs:string" minOccurs="0"/>
+
+      <!-- Superscript homograph number -->
+      <xs:element name="homograph_num" type="xs:integer" minOccurs="0"/>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================================================
+       GRAMMATICAL INFORMATION
+       ============================================================ -->
+  <xs:complexType name="GrammarType">
+    <xs:sequence>
+
+      <!-- Phrase type: NP, VP, AdjP, AdvP, PrepP, Interj, saying, etc. -->
+      <xs:element name="phrase_type" type="PhraseTypeType"/>
+
+      <!-- Invar / these forms only / fixed WO etc. -->
+      <xs:element name="form_restriction" type="FormRestrictionType"
+                  minOccurs="0" maxOccurs="unbounded"/>
+
+      <!-- Syntactic function: subj, obj, adv, predic, modif, sent adv, etc. -->
+      <xs:element name="synt_function" type="xs:string"
+                  minOccurs="0" maxOccurs="unbounded"/>
+
+      <!-- Subject restriction: human, collect, animal, etc. -->
+      <xs:element name="subj_restriction" type="xs:string" minOccurs="0"/>
+
+      <!-- Object/complement restriction -->
+      <xs:element name="obj_restriction" type="xs:string" minOccurs="0"/>
+
+      <!-- Case government for prepositional phrases -->
+      <xs:element name="case_government" type="xs:string" minOccurs="0"/>
+
+      <!-- Aspect information for verbal idioms: impf, pfv, or both -->
+      <xs:element name="aspect" type="AspectType" minOccurs="0"/>
+
+      <!-- Tense restrictions if any -->
+      <xs:element name="tense_restriction" type="xs:string" minOccurs="0"/>
+
+      <!-- Number restriction: sing only, pl only -->
+      <xs:element name="number_restriction" type="xs:string" minOccurs="0"/>
+
+      <!-- Raw grammatical string as it appears in SL (for reference) -->
+      <xs:element name="raw_grammar" type="xs:string" minOccurs="0"/>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================================================
+       PHRASE TYPE enumeration
+       ============================================================ -->
+  <xs:simpleType name="PhraseTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NP"/>        <!-- noun phrase -->
+      <xs:enumeration value="VP"/>        <!-- verb phrase -->
+      <xs:enumeration value="AdjP"/>      <!-- adjective phrase -->
+      <xs:enumeration value="AdvP"/>      <!-- adverb phrase -->
+      <xs:enumeration value="PrepP"/>     <!-- prepositional phrase -->
+      <xs:enumeration value="Interj"/>    <!-- interjection -->
+      <xs:enumeration value="saying"/>    <!-- proverb or saying -->
+      <xs:enumeration value="formula"/>   <!-- formula phrase (greeting etc.) -->
+      <xs:enumeration value="sent"/>      <!-- sentential idiom -->
+      <xs:enumeration value="quantif"/>   <!-- quantifier -->
+      <xs:enumeration value="particle"/>  <!-- particle -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ============================================================
+       FORM RESTRICTION enumeration
+       ============================================================ -->
+  <xs:simpleType name="FormRestrictionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Invar"/>           <!-- invariable -->
+      <xs:enumeration value="fixed_WO"/>        <!-- fixed word order -->
+      <xs:enumeration value="usu_this_WO"/>     <!-- usually this word order -->
+      <xs:enumeration value="these_forms_only"/>
+      <xs:enumeration value="this_form_only"/>
+      <xs:enumeration value="impers"/>          <!-- impersonal -->
+      <xs:enumeration value="predic"/>          <!-- predicative only -->
+      <xs:enumeration value="usu_neg"/>         <!-- usually negative -->
+      <xs:enumeration value="neg_only"/>        <!-- negative only -->
+      <xs:enumeration value="imper"/>           <!-- imperative -->
+      <xs:enumeration value="fut_gener"/>       <!-- future generic (ты form) -->
+      <xs:enumeration value="past_only"/>
+      <xs:enumeration value="pres_only"/>
+      <xs:enumeration value="pl_only"/>
+      <xs:enumeration value="sing_only"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ============================================================
+       ASPECT
+       ============================================================ -->
+  <xs:simpleType name="AspectType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="impf"/>
+      <xs:enumeration value="pfv"/>
+      <xs:enumeration value="both"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ============================================================
+       SENSE — numbered sense within an entry
+       ============================================================ -->
+  <xs:complexType name="SenseType">
+    <xs:sequence>
+
+      <!-- Usage labels (coll, iron, lit, rhet, vulg, obs, etc.) -->
+      <xs:element name="usage_labels" type="UsageLabelsType" minOccurs="0"/>
+
+      <!-- Definition in French -->
+      <xs:element name="definition" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="lang" fixed="fr"/>
+              <xs:attribute name="type">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="full"/>
+                    <xs:enumeration value="usage_note"/>
+                    <!-- usage_note for prepositions/conjunctions/particles -->
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- Russian patterns (X ≈ ...) -->
+      <xs:element name="patterns" type="PatternsType" minOccurs="0"/>
+
+      <!-- French equivalents — core content of R-F dictionary -->
+      <xs:element name="french_equivalents" type="FrenchEquivalentsType"/>
+
+      <!-- Collocates shown after ○ symbol -->
+      <xs:element name="collocates" type="xs:string" minOccurs="0"/>
+
+      <!-- Illustrative examples -->
+      <xs:element name="examples" type="ExamplesType" minOccurs="0"/>
+
+      <!-- Cross-references (See X-nn) -->
+      <xs:element name="cross_ref" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="ref" type="xs:string"/>
+              <xs:attribute name="type">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="see"/>
+                    <xs:enumeration value="see_also"/>
+                    <xs:enumeration value="cf"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+
+    </xs:sequence>
+
+    <!-- Sense number (1, 2, 3... or 1a, 1b for subsenses) -->
+    <xs:attribute name="n" type="xs:string" default="1"/>
+
+  </xs:complexType>
+
+  <!-- ============================================================
+       USAGE LABELS
+       ============================================================ -->
+  <xs:complexType name="UsageLabelsType">
+    <xs:sequence>
+      <xs:element name="label" type="UsageLabelType"
+                  minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <!-- "all" = applies to all variants; "both" = applies to two variants -->
+    <xs:attribute name="scope">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="all"/>
+          <xs:enumeration value="both"/>
+          <xs:enumeration value="single"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:simpleType name="UsageLabelType">
+    <xs:restriction base="xs:string">
+      <!-- Temporal labels -->
+      <xs:enumeration value="obs"/>          <!-- obsolete -->
+      <xs:enumeration value="obsoles"/>      <!-- obsolescent -->
+      <xs:enumeration value="old_fash"/>     <!-- old-fashioned -->
+      <xs:enumeration value="rare"/>
+      <xs:enumeration value="recent"/>
+      <!-- Stylistic labels -->
+      <xs:enumeration value="coll"/>         <!-- colloquial -->
+      <xs:enumeration value="highly_coll"/>  <!-- highly colloquial -->
+      <xs:enumeration value="substand"/>     <!-- substandard -->
+      <xs:enumeration value="slang"/>
+      <xs:enumeration value="euph"/>         <!-- euphemism -->
+      <xs:enumeration value="iron"/>         <!-- ironic -->
+      <xs:enumeration value="lit"/>          <!-- literary -->
+      <xs:enumeration value="rhet"/>         <!-- rhetorical -->
+      <xs:enumeration value="elev"/>         <!-- elevated -->
+      <xs:enumeration value="offic"/>        <!-- official -->
+      <xs:enumeration value="special"/>      <!-- specialized -->
+      <xs:enumeration value="folk_poet"/>    <!-- folkloric-poetic -->
+      <xs:enumeration value="vulg"/>         <!-- vulgar -->
+      <xs:enumeration value="taboo"/>
+      <!-- Emotive-expressive labels -->
+      <xs:enumeration value="humor"/>
+      <xs:enumeration value="disapprov"/>
+      <xs:enumeration value="derog"/>
+      <xs:enumeration value="condes"/>       <!-- condescending -->
+      <xs:enumeration value="impol"/>        <!-- impolite -->
+      <xs:enumeration value="rude"/>
+      <!-- French-specific additions -->
+      <xs:enumeration value="vieilli"/>      <!-- dated/archaic in French -->
+      <xs:enumeration value="sout"/>         <!-- soutenu -->
+      <xs:enumeration value="fam"/>          <!-- familier -->
+      <xs:enumeration value="pop"/>          <!-- populaire -->
+      <xs:enumeration value="arg"/>          <!-- argotique -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ============================================================
+       RUSSIAN PATTERNS
+       ============================================================ -->
+  <xs:complexType name="PatternsType">
+    <xs:sequence>
+      <xs:element name="pattern" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ru" type="xs:string"/>
+            <!-- French rendering of the pattern — optional -->
+            <xs:element name="fr" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+          <!-- Pattern type: standard ≈, double bar ||, special ◇ -->
+          <xs:attribute name="type">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="standard"/>   <!-- ≈ -->
+                <xs:enumeration value="double"/>     <!-- || -->
+                <xs:enumeration value="special"/>    <!-- ◇ -->
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================================================
+       FRENCH EQUIVALENTS
+       ============================================================ -->
+  <xs:complexType name="FrenchEquivalentsType">
+    <xs:sequence>
+      <xs:element name="equiv" type="EquivType"
+                  minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EquivType">
+    <xs:sequence>
+      <!-- The French equivalent text -->
+      <xs:element name="text" type="xs:string"/>
+      <!-- Collocates shown in parentheses within the equivalent -->
+      <xs:element name="collocate" type="xs:string"
+                  minOccurs="0" maxOccurs="unbounded"/>
+      <!-- Restrictions on use [lim.] etc. -->
+      <xs:element name="restriction" type="xs:string" minOccurs="0"/>
+      <!-- Cf. idioms — culturally bound French equivalent -->
+      <xs:element name="cf" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+
+    <!-- Register — key French-specific extension -->
+    <xs:attribute name="register">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="neutre"/>    <!-- stylistically neutral -->
+          <xs:enumeration value="prov"/>      <!-- proverbial -->
+          <xs:enumeration value="sout"/>      <!-- soutenu/literary -->
+          <xs:enumeration value="litt"/>      <!-- strictly literary -->
+          <xs:enumeration value="cour"/>      <!-- courant/standard -->
+          <xs:enumeration value="fam"/>       <!-- familier -->
+          <xs:enumeration value="pop"/>       <!-- populaire -->
+          <xs:enumeration value="arg"/>       <!-- argotique -->
+          <xs:enumeration value="vieilli"/>   <!-- dated -->
+          <xs:enumeration value="iron"/>      <!-- ironic -->
+          <xs:enumeration value="humor"/>     <!-- humorous -->
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+
+    <!-- Primary = first/most applicable equivalent -->
+    <xs:attribute name="primary" type="xs:boolean" default="false"/>
+
+  </xs:complexType>
+
+  <!-- ============================================================
+       EXAMPLES
+       ============================================================ -->
+  <xs:complexType name="ExamplesType">
+    <xs:sequence>
+      <xs:element name="example" type="ExampleType"
+                  minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ExampleType">
+    <xs:sequence>
+
+      <!-- Russian source text — exactly as in SL (with ... for cuts) -->
+      <xs:element name="ru">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <!-- The idiom phrase highlighted within the citation -->
+              <xs:attribute name="idiom_pos" type="xs:string"/>
+              <!-- author's usage label (placed before citation in SL) -->
+              <xs:attribute name="author_label">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="source"/>
+                    <xs:enumeration value="author_usage"/>
+                    <xs:enumeration value="context_transl"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- French translation of the example -->
+      <xs:element name="fr">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <!-- Status of the French translation -->
+              <xs:attribute name="status" use="required">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="published"/>    <!-- from published translation -->
+                    <xs:enumeration value="constructed"/> <!-- invented example -->
+                    <xs:enumeration value="pending"/>      <!-- not yet found -->
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- Bibliographic reference -->
+      <xs:element name="bibref" type="BibRefType"/>
+
+    </xs:sequence>
+
+    <!-- Example type -->
+    <xs:attribute name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="literary"/>    <!-- from published literature -->
+          <xs:enumeration value="invented"/>    <!-- compiler's invented example -->
+          <xs:enumeration value="memoir"/>      <!-- from memoir/non-fiction -->
+          <xs:enumeration value="press"/>       <!-- from press/journalism -->
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+
+    <!-- Example number within entry (for entries with multiple examples) -->
+    <xs:attribute name="n" type="xs:string"/>
+
+  </xs:complexType>
+
+  <!-- ============================================================
+       BIBLIOGRAPHIC REFERENCE
+       ============================================================ -->
+  <xs:complexType name="BibRefType">
+    <xs:sequence>
+
+      <!-- SL bibliography code e.g. "Шолохов-2" -->
+      <xs:element name="sl_code" type="xs:string"/>
+
+      <!-- SL citation suffix e.g. "2a", "1b" -->
+      <xs:element name="sl_suffix" type="xs:string" minOccurs="0"/>
+
+      <!-- Full Russian source details (from bibliography table) -->
+      <xs:element name="ru_source">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="author" type="xs:string"/>
+            <xs:element name="work" type="xs:string"/>
+            <xs:element name="book_vol" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- French translation source details -->
+      <xs:element name="fr_source" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="author_fr" type="xs:string"/>
+            <!-- Transliterated author name for French text -->
+            <xs:element name="work_fr" type="xs:string"/>
+            <xs:element name="translator" type="xs:string"/>
+            <xs:element name="publisher" type="xs:string" minOccurs="0"/>
+            <xs:element name="year" type="xs:string" minOccurs="0"/>
+            <xs:element name="book_vol_fr" type="xs:string" minOccurs="0"/>
+            <xs:element name="page" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================================================
+       RELATED NOUN PHRASE (○ symbol in SL)
+       ============================================================ -->
+  <xs:complexType name="RelatedNPType">
+    <xs:sequence>
+      <xs:element name="headword" type="xs:string"/>
+      <xs:element name="grammar" type="xs:string" minOccurs="0"/>
+      <xs:element name="french_equivalents" type="FrenchEquivalentsType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
