@@ -24,11 +24,7 @@ LATEX_PREAMBLE = r"""
 \setotherlanguage{russian}
 
 % Fonts — FreeSerif covers Latin, Cyrillic, French diacritics
-\setmainfont{FreeSerif}[
-    BoldFont     = FreeSerifBold,
-    ItalicFont   = FreeSerifItalic,
-    BoldItalicFont = FreeSerifBoldItalic
-]
+\setmainfont{CMU Serif}
 \setmonofont{DejaVu Sans Mono}[Scale=0.85]
 
 \usepackage{microtype}
@@ -56,8 +52,8 @@ LATEX_PREAMBLE = r"""
 
 % Entry number + headword style
 \newcommand{\entrynum}[1]{\textbf{#1}}
-\newcommand{\headword}[1]{\textbf{\MakeUppercase{#1}}}
-\newcommand{\headwordvar}[1]{\textbf{\MakeUppercase{#1}}}
+\newcommand{\headword}[1]{\textbf{#1}}
+\newcommand{\headwordvar}[1]{\textbf{#1}}
 
 % Usage label style — italic, small
 \newcommand{\usagelabel}[1]{\textit{#1}}
@@ -120,6 +116,8 @@ def escape_latex(text):
     if not text:
         return ""
     text = text.strip()
+    # Combining acute accent (U+0301) used for Russian stress — preserve as-is
+    # XeLaTeX with FreeSerif renders it correctly
     # Escape LaTeX specials (but not backslash itself — handle carefully)
     replacements = [
         ('&', r'\&'),
@@ -176,9 +174,24 @@ def render_head_matter(entry):
     if variants:
         var_texts = [escape_latex(v.text.strip()) for v in variants if v.text]
         var_line = "; ".join([f"\\headwordvar{{{v}}}" for v in var_texts])
-        lines.append(var_line)
+        lines.append("; " + var_line)
 
     return " ".join(lines)
+
+# Phrase type → French abbreviation mapping
+PHRASE_TYPE_FR = {
+    "saying":   "prov.",
+    "NP":       "SN",
+    "VP":       "SV",
+    "AdjP":     "SAdj",
+    "AdvP":     "SAdv",
+    "PrepP":    "SP",
+    "Interj":   "Interj",
+    "formula":  "formule",
+    "sent":     "prop",
+    "quantif":  "quantif",
+    "particle": "particule",
+}
 
 def render_grammar(entry):
     """Render grammatical information in brackets."""
@@ -189,9 +202,13 @@ def render_grammar(entry):
                         if e.text]
 
     if raw:
+        # Translate phrase type in raw grammar string
+        for en, fr in PHRASE_TYPE_FR.items():
+            raw = raw.replace(f"[{en}]", f"[{fr}]").replace(en, fr)
         return f"\\graminfo{{{escape_latex(raw)}}}"
     elif phrase_type:
-        parts = [phrase_type] + form_restrictions
+        pt_fr = PHRASE_TYPE_FR.get(phrase_type, phrase_type)
+        parts = [pt_fr] + form_restrictions
         return f"\\graminfo{{{escape_latex('; '.join(parts))}}}"
     return ""
 
@@ -297,23 +314,34 @@ def render_examples(sense):
         elif fr_status == 'constructed':
             status_marker = r" \textcolor{blue}{[forgé]}"
 
+        # Build SL-style abbreviated citation: (Шолохов 2a)
+        # For Russian example: full code e.g. (Шолохов 2a)
+        # For French example: just the letter suffix e.g. (2a) matching SL convention
+        sl_citation = ""
+        fr_citation_short = ""
+        if bibref is not None:
+            sl_code = get_text(bibref, 'sl_code')
+            sl_suffix = get_text(bibref, 'sl_suffix')
+            if sl_code:
+                author_short = sl_code.split('-')[0] if '-' in sl_code else sl_code
+                work_num = sl_code.split('-')[1] if '-' in sl_code else ""
+                # SL convention:
+                # Russian citation: (Шолохов 2) — author + work number, no suffix
+                # FR/EN citation:   (2a) — work number + suffix only, author implied
+                suffix_str = sl_suffix if sl_suffix else ""
+                sl_citation = f"{escape_latex(author_short)} {escape_latex(work_num)}"
+                fr_citation_short = f"{escape_latex(work_num)}{escape_latex(suffix_str)}"
+
         # Format the example block
         example_block = ""
         if ru_text:
             example_block += f"\n\\exbullet \\ruex{{{escape_latex(ru_text)}}}"
-            if citation:
-                example_block += f" \\srcite{{{citation}}}"
+            if sl_citation:
+                example_block += f" \\srcite{{{sl_citation}}}"
         if fr_text:
             example_block += f"\n\\quad \\frex{{{escape_latex(fr_text)}}}"
-            if citation:
-                # Get French source info
-                fr_work = get_text(bibref, './/fr_source/work_fr') if bibref is not None else ""
-                translator = get_text(bibref, './/fr_source/translator') if bibref is not None else ""
-                if fr_work:
-                    fr_citation = f"{escape_latex(fr_work)}"
-                    if translator:
-                        fr_citation += f", trad. {escape_latex(translator)}"
-                    example_block += f" \\srcite{{{fr_citation}}}"
+            if fr_citation_short:
+                example_block += f" \\srcite{{{fr_citation_short}}}"
             example_block += status_marker
 
         lines.append(example_block)

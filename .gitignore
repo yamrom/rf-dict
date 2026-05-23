@@ -32,3 +32,5 @@ sl_second_edition.pdf
 # Editor
 .vscode/
 *.swp
+.env
+pipeline/_temp/

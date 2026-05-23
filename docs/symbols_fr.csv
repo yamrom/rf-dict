@@ -1,0 +1,13 @@
+Symbol,SL_description_EN,FR_description_FR,Notes
+"быть₀",indicates copular быть,indique le быть copule,
+/,separates verbal aspects,sépare les aspects verbaux,
+"{ }",shows variants,indique les variantes,
+"( )",encloses optional elements,indique les éléments facultatifs,
+"[ ]",used for grammatical information and compiler's comments,informations grammaticales et commentaires du rédacteur,
+~,replaces an idiom in a pattern,remplace une locution dans un schéma,
+=,introduces English equivalents of Russian patterns,introduit les équivalents français des schémas russes,FR: 'français' replaces 'English'
+||,introduces patterns,introduit les schémas,
+○,indicates related noun phrase for verbal idioms,indique le syntagme nominal apparenté pour les locutions verbales,
+♦,separates illustrations,sépare les illustrations,
+<,introduces notes on the source or origin of idioms,introduit des notes sur la source ou l'origine des locutions,
+(?),indicates that the etymological information provided cannot be fully substantiated,indique que l'information étymologique fournie ne peut être pleinement corroborée,

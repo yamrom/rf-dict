@@ -1,0 +1,17 @@
+name: rf-dict
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pandas
+  - requests
+  - tqdm
+  - pip
+  - pip:
+    - pdfplumber
+    - pypdf
+    - anthropic
+    - python-dotenv
+    # rnc -- BROKEN against current ruscorpora.ru (May 2026)
+    # Use manual CSV export instead, see pipeline/rnc_search.py

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entry id="Б-41" sl_ref="Б-41" status="draft">
+
+  <head_matter>
+    <canonical>
+      <text>БЕДА́ (НИКОГДА́) НЕ ПРИХО́ДИТ (НЕ ХО́ДИТ) ОДНА́</text>
+    </canonical>
+    <variant>
+      <text>БЕДА́ В ОДИНО́ЧКУ НЕ ХО́ДИТ</text>
+    </variant>
+  </head_matter>
+
+  <grammar>
+    <phrase_type>saying</phrase_type>
+    <raw_grammar>[prov.]</raw_grammar>
+  </grammar>
+
+  <sense n="1">
+    <!-- DÉFINITION: traduire/adapter en français -->
+    <definition lang="fr" type="full">TODO</definition>
+
+    <!-- ÉQUIVALENTS FRANÇAIS: à compléter -->
+    <french_equivalents>
+      <equiv register="prov" primary="true">
+        <text>TODO</text>
+      </equiv>
+      <equiv register="cour">
+        <text>TODO</text>
+      </equiv>
+      <equiv register="fam">
+        <text>TODO</text>
+      </equiv>
+    </french_equivalents>
+
+    <examples>
+    </examples>
+
+  </sense>
+
+</entry>

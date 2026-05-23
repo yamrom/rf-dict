@@ -10,12 +10,12 @@
 
   <head_matter>
     <canonical>
-      <text>БЕДА (НИКОГДА́) НЕ ПРИХОДИТ (НЕ ХОДИТ) ОДНА́</text>
+      <text>БЕДА́ (НИКОГДА́) НЕ ПРИХО́ДИТ (НЕ ХО́ДИТ) ОДНА́</text>
       <optional_element>НИКОГДА́</optional_element>
       <optional_element>НЕ ХОДИТ</optional_element>
     </canonical>
     <variant>
-      <text>БЕДА́ В ОДИНО́ЧКУ НЕ ХОДИТ</text>
+      <text>БЕДА́ В ОДИНО́ЧКУ НЕ ХО́ДИТ</text>
     </variant>
   </head_matter>
 
@@ -82,7 +82,7 @@
         </fr>
         <bibref>
           <sl_code>Шолохов-2</sl_code>
-          <sl_suffix>2a</sl_suffix>
+          <sl_suffix>a</sl_suffix>
           <ru_source>
             <author>Шолохов Михаил Александрович</author>
             <work>Тихий Дон</work>

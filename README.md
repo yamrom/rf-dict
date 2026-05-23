@@ -80,3 +80,35 @@ Unlike the English edition, French equivalents are organized by register:
 ## License
 
 To be determined pending IP legal consultation.
+
+## RNC Corpus Workflow
+
+The `rnc` Python library is currently broken against ruscorpora.ru (May 2026).
+Use the manual export workflow instead:
+
+### Searching for idiom examples
+
+1. Go to [ruscorpora.ru](https://ruscorpora.ru) → main corpus
+2. Search using lemma forms from `pipeline/rnc_search.py` PILOT_QUERIES
+3. Export results: click **Скачать** → CSV
+4. Save to `pipeline/rnc_exports/` as `B41_беда_не_приходит_одна.csv`
+5. Import: `python3 pipeline/rnc_db.py import pipeline/rnc_exports/FILE.csv Б-41`
+6. Review best examples: `python3 pipeline/rnc_db.py best Б-41`
+
+### Pilot page query reference
+
+| Entry | Idiom | RNC query | Search type | Notes |
+|-------|-------|-----------|-------------|-------|
+| Б-36 | В БЕГАХ | `в бегах` | lexform | preposition essential |
+| Б-37 | КАК БЕГЕМОТ | `бегемот` | lexgramm | key noun sufficient |
+| Б-38 | СПАСАТЬСЯ БЕГСТВОМ | `спасаться бегство` | lexgramm | two content words |
+| Б-39 | НА БЕГУ | `на бегу` | lexform | preposition essential |
+| Б-40 | СЕМЬ БЕД ОДИН ОТВЕТ | `семь беда ответ` | lexgramm | distinctive combination |
+| Б-41 | БЕДА НЕ ПРИХОДИТ ОДНА | `беда приходить один` | lexgramm | ✅ tested, 29 results |
+| Б-42 | ЛИХА БЕДА | `лихой беда` | lexgramm | obsoles, may be rare |
+| Б-43 | ЛИХА БЕДА НАЧАЛО | `лихой беда начало` | lexgramm | saying |
+| Б-44 | НЕ БЕДА | `не беда` | lexform | negation integral |
+
+**Search type guidance:**
+- `lexgramm` — lemma search, finds all inflected forms. Use for content words.
+- `lexform` — exact form search. Use for frozen prepositional phrases and negated idioms.
