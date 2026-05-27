@@ -664,8 +664,123 @@ STYLISTIC_LABELS = {
     ),
 }
 
+# ============================================================
+# FRENCH GRAMMATICAL LABEL MAPPING
+# SL English notation → French lexicographic equivalents
+# ============================================================
+
+FR_GRAMMAR_LABELS = {
+    # Phrase types
+    "saying":        "loc. prov.",   # locution proverbiale
+    "NP":            "loc. nom.",    # locution nominale
+    "VP":            "loc. verb.",   # locution verbale
+    "AdjP":          "loc. adj.",    # locution adjectivale
+    "AdvP":          "loc. adv.",    # locution adverbiale
+    "PrepP":         "loc. prép.",   # locution prépositive
+    "Interj":        "interj.",      # interjection
+    "formula":       "formule",      # formule de politesse
+    "simile":        "compar. fig.", # comparaison figée
+    "intensifier":   "intensif.",    # intensificateur
+    "quantif":       "quantif.",     # quantificateur
+    "prep_idiom":    "prép.",        # préposition
+    "conj_idiom":    "conj.",        # conjonction
+    "particle_idiom": "part.",       # particule
+
+    # Stylistic labels
+    "coll":          "fam.",         # familier
+    "highly coll":   "très fam.",    # très familier
+    "substand":      "pop.",         # populaire
+    "slang":         "arg.",         # argotique
+    "obs":           "vx.",          # vieux
+    "obsoles":       "vieilli.",     # vieilli
+    "old-fash":      "vieilli.",     # vieilli
+    "lit":           "litt.",        # littéraire
+    "elev":          "sout.",        # soutenu
+    "offic":         "admin.",       # administratif
+    "rhet":          "rhét.",        # rhétorique
+    "iron":          "iron.",        # ironique
+    "humor":         "plaisant.",    # plaisant
+    "disapprov":     "péj.",         # péjoratif
+    "derog":         "péj.",         # péjoratif
+    "vulg":          "vulg.",        # vulgaire
+    "euph":          "euphem.",      # euphémique
+    "folk poet":     "folkl.",       # folklorique
+    "rare":          "rare.",        # rare
+    "special":       "spéc.",        # spécialisé
+
+    # Syntactic functions
+    "subj-compl":    "attrib.",      # attribut du sujet
+    "adv":           "adv.",         # adverbe / adverbial
+    "modif":         "épith.",       # épithète
+    "Invar":         "inv.",         # invariable
+    "fixed WO":      "ordre fixe",   # ordre des mots fixe
+    "indep. sent":   "phrase indép.", # phrase indépendante
+}
+
+
+def to_fr_label(en_label: str) -> str:
+    """Convert an English SL label to its French equivalent."""
+    return FR_GRAMMAR_LABELS.get(en_label, en_label)
+
+
+def build_fr_grammar_bracket(analysis: dict) -> str:
+    """
+    Build a French-style grammar bracket from the analysis dict.
+    e.g. [saying] → [loc. prov.]
+         [NP; Invar; subj-compl with бытьø] → [loc. nom.; inv.; attrib.]
+    """
+    phrase_type = analysis.get("phrase_type", "")
+    form        = analysis.get("form_restriction", "")
+    functions   = analysis.get("syntactic_functions", [])
+    wo          = analysis.get("word_order", "")
+    register    = analysis.get("register", {})
+
+    parts = []
+
+    # Phrase type
+    if phrase_type:
+        parts.append(to_fr_label(phrase_type))
+
+    # Form restriction
+    if form and form != "null":
+        parts.append(to_fr_label(form))
+
+    # Primary syntactic function
+    if functions:
+        primary = functions[0]
+        fr_func = to_fr_label(primary)
+        if fr_func not in parts:
+            parts.append(fr_func)
+
+    # Word order
+    if wo == "fixed WO":
+        parts.append("ordre fixe")
+
+    # Stylistic labels — only include if non-neutral
+    temporal   = register.get("temporal", "")
+    stylistic  = register.get("stylistic", "")
+    expressive = register.get("expressive", "")
+    for label in [temporal, stylistic, expressive]:
+        if label and label not in ("null", None, "neutral"):
+            fr = to_fr_label(label)
+            if fr not in parts:
+                parts.append(fr)
+
+    return "[" + "; ".join(parts) + "]" if parts else ""
+
+
 if __name__ == '__main__':
     print("Guide Spec loaded.")
+    # Test French label mapping
+    test_analysis = {
+        "phrase_type": "saying",
+        "form_restriction": "Invar",
+        "syntactic_functions": ["indep. sent"],
+        "word_order": "fixed WO",
+        "register": {"temporal": None, "stylistic": None, "expressive": None}
+    }
+    print(f"Test: {build_fr_grammar_bracket(test_analysis)}")
+    # Expected: [loc. prov.; inv.; phrase indép.; ordre fixe]
     print(f"Defective paradigm dimensions: {len(DEFECTIVE_PARADIGM['dimensions'])}")
     print(f"Negation patterns: {len(NEGATION_RULES['patterns'])}")
     print(f"Analysis checklist items: {len(IDIOM_ANALYSIS_CHECKLIST)}")

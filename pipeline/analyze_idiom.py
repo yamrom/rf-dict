@@ -152,7 +152,7 @@ Return this exact JSON structure:
   "archaic_note": "description of archaic form if present, else null",
   "etymology": "biblical|literary|historical|calque|folk|null",
   "etymology_note": "brief etymology if relevant, else null",
-  "ru_paraphrase": "plain Russian paraphrase of the idiom meaning (no idioms used)",
+  "ru_paraphrase": "plain Russian paraphrase of the idiom meaning (no idioms, no foreign words, pure Russian only, 1-2 sentences)",
   "confidence": "high|medium|low",
   "confidence_note": "brief note if confidence is not high"
 }}
@@ -197,7 +197,7 @@ Key steps:
 3. Check all 5 defective paradigm dimensions
 4. Determine negation behavior
 5. Assign stylistic labels (temporal, register, expressive)
-6. Write a plain Russian paraphrase (no idioms, 1-2 sentences)
+6. Write a plain Russian paraphrase (no idioms, 1-2 sentences, use only Russian words — no English or foreign words)
 
 Return ONLY the JSON object. No other text.
 """
