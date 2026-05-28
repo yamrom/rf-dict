@@ -131,32 +131,19 @@ def render_entry_to_doc(entry: dict, doc: Document):
         para = doc.add_paragraph()
         para.paragraph_format.space_after = Pt(2)
 
-        if entry["match_type"] == "A":
-            # Type A: bold French idiomatic equivalent
+        if entry["match_type"] == "A" and entry["fr_paraphrase"]:
+            # Format: paraphrase ≃ idiom
+            add_run(para, entry["fr_paraphrase"], size=11)
+            add_run(para, " ≃ ", size=11)
             add_run(para, entry["fr_definition"], bold=True, size=11)
-            # French paraphrase in smaller italic
-            if entry["fr_paraphrase"]:
-                add_run(para, " — ", size=10)
-                add_run(para, entry["fr_paraphrase"],
-                        italic=True, size=10, color=(60, 60, 60))
+        elif entry["match_type"] == "A":
+            # No paraphrase available — just the idiom
+            add_run(para, entry["fr_definition"], bold=True, size=11)
         else:
-            # Type B: regular paraphrase definition
+            # Type B: paraphrase only
             add_run(para, entry["fr_definition"], size=11)
 
-    # ── 5. PARAPHRASES (review section — smaller, grey) ─────
-    if entry["paraphrase_ru"]:
-        para = doc.add_paragraph()
-        para.paragraph_format.space_after = Pt(1)
-        add_run(para, "[ru] ", size=9, color=(150, 150, 150))
-        add_run(para, entry["paraphrase_ru"],
-                italic=True, size=9, color=(120, 120, 120))
-
-    if entry["paraphrase_fr"]:
-        para = doc.add_paragraph()
-        para.paragraph_format.space_after = Pt(2)
-        add_run(para, "[fr] ", size=9, color=(150, 150, 150))
-        add_run(para, entry["paraphrase_fr"],
-                italic=True, size=9, color=(120, 120, 120))
+    # ── 5. PARAPHRASES — suppressed in output, kept in XML for review
 
     # ── 6. RUSSIAN EXAMPLE ──────────────────────────────────
     if entry["ru_sentence"]:

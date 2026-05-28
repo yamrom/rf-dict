@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entry id="Б-41" status="draft">
+
+  <headword>
+    <canonical>БЕДА́ (НИКОГДА́) НЕ ПРИХО́ДИТ 〈НЕ ХО́-ДИТ〉 ОДНА́</canonical>
+    <variant>БЕДА́ В ОДИНО́ЧКУ НЕ ХО́ДИТ</variant>
+  </headword>
+
+  <grammar>
+    <bracket>[loc. prov.]</bracket>
+    <paraphrase lang="ru">Когда случается одно несчастье или неприятность, за ним часто следуют другие проблемы, потому что неудачи имеют свойство накапливаться одновременно. Эту фразу говорят с resignацией или горькой иронией, когда человек сталкивается с новыми трудностями на фоне уже существующих.</paraphrase>
+    <paraphrase lang="fr">Quand un malheur ou un problème survient, il est souvent suivi d'autres difficultés, car les épreuves ont tendance à s'accumuler en même temps. On prononce cette phrase avec résignation ou une ironie amère lorsqu'une personne fait face à de nouvelles difficultés alors qu'elle en a déjà.</paraphrase>
+  </grammar>
+
+  <stylistic_labels></stylistic_labels>
+
+  <french>
+    <definition type="equivalent">un malheur ne vient jamais seul</definition>
+    <match_type>A</match_type>
+    <fr_paraphrase></fr_paraphrase>
+  </french>
+
+  <examples>
+    <example lang="ru">
+      <sentence>Тетя Рая тоже об этом думала ― беда не приходит одна.</sentence>
+      <citation>Маша Трауб, Замочная скважина (2012)</citation>
+    </example>
+    <example lang="fr" status="constructed">
+      <sentence>Tante Raya y pensait aussi — un malheur ne vient jamais seul.</sentence>
+    </example>
+  </examples>
+
+  <!-- verification only — not for rendering -->
+  <internal>
+    <en_example></en_example>
+    <phrase_type_en>saying</phrase_type_en>
+    <ru_bracket>[saying]</ru_bracket>
+  </internal>
+
+</entry>

@@ -38,14 +38,41 @@ PDF_DIR       = REPO_ROOT / "pdf"
 # ============================================================
 
 def get_entry_data(entry_id: str, entry_to_idioms: dict) -> dict:
-    """Get all idiom variants for an entry from the index."""
+    """Get canonical idiom from index, but get proper headword variants from SL docx."""
     idioms = entry_to_idioms.get(entry_id, [])
     if not idioms:
         raise ValueError(f"Entry {entry_id} not found in index")
+
+    canonical = idioms[0]
+
+    # Get proper variants from SL docx parser (not from index)
+    # Index has too many forms including fragments
+    variants = []
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "sl_docx_parser", PIPELINE_DIR / "sl_docx_parser.py"
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        doc   = mod.load_doc()
+        index = mod.build_index(doc)
+        paras = mod.get_entry_paragraphs(doc, entry_id, index)
+        if paras:
+            parsed   = mod.parse_entry(entry_id, paras)
+            headwords = parsed.get("headwords", [])
+            # First headword is canonical, rest are proper variants
+            if headwords:
+                canonical = headwords[0]
+                variants  = headwords[1:] if len(headwords) > 1 else []
+    except Exception as e:
+        print(f"      (SL docx unavailable, using index canonical: {e})")
+
     return {
         "entry_id":  entry_id,
-        "canonical": idioms[0],
-        "variants":  idioms[1:] if len(idioms) > 1 else [],
+        "canonical": canonical,
+        "variants":  variants,
         "all_forms": idioms,
     }
 
@@ -298,15 +325,21 @@ def _escape(text: str) -> str:
 # STEP 6: RENDER PDF (optional)
 # ============================================================
 
-def render_pdf(xml_path: Path, entry_id: str) -> Path:
-    """Render XML entry to PDF via xml_to_latex.py."""
+def render_docx(xml_path: Path, entry_id: str) -> Path:
+    """Render XML entry to Word document via xml_to_docx.py."""
     try:
-        from xml_to_latex import render_entry
-        pdf_path = PDF_DIR / f"entry_{entry_id.replace('-','_')}.pdf"
-        render_entry(str(xml_path), str(pdf_path))
-        return pdf_path
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "xml_to_docx", PIPELINE_DIR / "xml_to_docx.py"
+        )
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        docx_path = PDF_DIR / f"entry_{entry_id.replace('-','_')}.docx"
+        mod.xml_to_docx(str(xml_path), str(docx_path))
+        return docx_path
     except Exception as e:
-        print(f"  PDF render failed: {e}")
+        print(f"  Word render failed: {e}")
         return None
 
 
@@ -393,18 +426,18 @@ def generate_entry(entry_id: str, conn,
                 "example":   example,
             }, f, ensure_ascii=False, indent=2)
 
-    # Step 6: Render PDF
-    pdf_path = None
+    # Step 6: Render Word document
+    docx_path = None
     if render:
-        print(f"  [6] Rendering PDF...")
-        pdf_path = render_pdf(xml_path, entry_id)
-        if pdf_path:
-            print(f"      Saved: {pdf_path}")
+        print(f"  [6] Rendering Word document...")
+        docx_path = render_docx(xml_path, entry_id)
+        if docx_path:
+            print(f"      Saved: {docx_path}")
 
     return {
         "entry_id": entry_id,
         "xml_path": str(xml_path),
-        "pdf_path": str(pdf_path) if pdf_path else None,
+        "docx_path": str(docx_path) if docx_path else None,
         "analysis": analysis,
         "match":    match,
         "example":  example,
@@ -432,9 +465,9 @@ if __name__ == '__main__':
             render=not args.no_pdf
         )
         print(f"\nDone: {result['entry_id']}")
-        print(f"  XML: {result['xml_path']}")
-        if result['pdf_path']:
-            print(f"  PDF: {result['pdf_path']}")
+        print(f"  XML:  {result['xml_path']}")
+        if result.get('docx_path'):
+            print(f"  Word: {result['docx_path']}")
 
     elif args.range:
         from_id, to_id = args.range

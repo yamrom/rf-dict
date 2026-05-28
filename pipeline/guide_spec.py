@@ -726,8 +726,8 @@ def to_fr_label(en_label: str) -> str:
 def build_fr_grammar_bracket(analysis: dict) -> str:
     """
     Build a French-style grammar bracket from the analysis dict.
-    e.g. [saying] → [loc. prov.]
-         [NP; Invar; subj-compl with бытьø] → [loc. nom.; inv.; attrib.]
+    For sayings: [loc. prov.] — no further annotation needed.
+    For others: [phrase_type; form; function; WO; register]
     """
     phrase_type = analysis.get("phrase_type", "")
     form        = analysis.get("form_restriction", "")
@@ -741,22 +741,28 @@ def build_fr_grammar_bracket(analysis: dict) -> str:
     if phrase_type:
         parts.append(to_fr_label(phrase_type))
 
+    # Sayings need no further annotation
+    if phrase_type in ("saying", "formula", "Interj"):
+        return "[" + parts[0] + "]"
+
     # Form restriction
-    if form and form != "null":
+    if form and form not in ("null", None, "free"):
         parts.append(to_fr_label(form))
 
-    # Primary syntactic function
+    # Primary syntactic function — skip redundant ones
+    skip_functions = {"indep. sent"}
     if functions:
         primary = functions[0]
-        fr_func = to_fr_label(primary)
-        if fr_func not in parts:
-            parts.append(fr_func)
+        if primary not in skip_functions:
+            fr_func = to_fr_label(primary)
+            if fr_func not in parts:
+                parts.append(fr_func)
 
-    # Word order
+    # Word order — only note if fixed
     if wo == "fixed WO":
         parts.append("ordre fixe")
 
-    # Stylistic labels — only include if non-neutral
+    # Stylistic labels — only if non-neutral
     temporal   = register.get("temporal", "")
     stylistic  = register.get("stylistic", "")
     expressive = register.get("expressive", "")

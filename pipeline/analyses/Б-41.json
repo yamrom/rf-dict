@@ -1,0 +1,78 @@
+{
+  "entry_id": "Б-41",
+  "entry_data": {
+    "entry_id": "Б-41",
+    "canonical": "БЕДА́ (НИКОГДА́) НЕ ПРИХО́ДИТ 〈НЕ ХО́-ДИТ〉 ОДНА́",
+    "variants": [
+      "БЕДА́ В ОДИНО́ЧКУ НЕ ХО́ДИТ"
+    ],
+    "all_forms": [
+      "беда в одиночку не ходит",
+      "беда не приходит 〈не ходит〉 одна",
+      "беда никогда не приходит 〈не ходит〉 одна",
+      "〈не ходит〉 одна",
+      "беда (никогда) не приходит одна",
+      "беда (никогда) не ходит одна"
+    ]
+  },
+  "analysis": {
+    "idiom": "БЕДА́ (НИКОГДА́) НЕ ПРИХО́ДИТ 〈НЕ ХО́ДИТ〉 ОДНА́",
+    "canonical_form": "БЕДА́ НЕ ПРИХО́ДИТ ОДНА́",
+    "phrase_type": "saying",
+    "subtype": "proverb",
+    "grammar_bracket": "[saying]",
+    "form_restriction": null,
+    "syntactic_functions": [
+      "indep. sent"
+    ],
+    "copula": null,
+    "subject_type": "abstr",
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "usu. this WO",
+    "defective_paradigm": {
+      "case": "any",
+      "number": "sing only",
+      "person": "3rd pers only",
+      "tense_aspect": "pres only",
+      "finite": "finite only"
+    },
+    "negation": "he_non_negative",
+    "aspect": "impfv only",
+    "aspect_note": null,
+    "register": {
+      "temporal": null,
+      "stylistic": null,
+      "expressive": null
+    },
+    "has_literal_meaning": false,
+    "literal_meaning_note": null,
+    "unique_lexical_component": false,
+    "archaic_component": false,
+    "archaic_note": null,
+    "etymology": "folk",
+    "etymology_note": "Traditional folk wisdom expressed as proverb",
+    "ru_paraphrase": "Когда случается одно несчастье или неприятность, за ним обычно следуют другие беды. Несчастья имеют свойство происходить не поодиночке, а группами или одно за другим.",
+    "confidence": "high",
+    "confidence_note": null
+  },
+  "match": {
+    "entry_id": "Б-41",
+    "idiom_ru": "беда не приходит одна",
+    "ru_paraphrase": "Когда случается одно несчастье или неприятность, за ним часто следуют другие проблемы, потому что неудачи имеют свойство накапливаться одновременно. Эту фразу говорят с resignацией или горькой иронией, когда человек сталкивается с новыми трудностями на фоне уже существующих.",
+    "fr_translation": "Quand un malheur ou un problème survient, il est souvent suivi d'autres difficultés, car les épreuves ont tendance à s'accumuler en même temps. On prononce cette phrase avec résignation ou une ironie amère lorsqu'une personne fait face à de nouvelles difficultés alors qu'elle en a déjà.",
+    "fr_idiom": "un malheur ne vient jamais seul",
+    "similarity_score": 10,
+    "match_type": "A",
+    "explanation": "This is a perfect match. Both idioms express the exact same concept: when one misfortune occurs, others tend to follow in succession. Both are used with resignation or bitter irony when facing accumulated difficulties.",
+    "pragmatic_note": "Used to express resignation or bitter irony when misfortunes accumulate; often said when a new problem arises on top of existing troubles."
+  },
+  "example": {
+    "ru_sentence": "Тетя Рая тоже об этом думала ― беда не приходит одна.",
+    "ru_author": "Маша Трауб",
+    "ru_work": "Замочная скважина",
+    "ru_year": "2012",
+    "en_sentence": "",
+    "status": "found"
+  }
+}

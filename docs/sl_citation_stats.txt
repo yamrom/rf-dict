@@ -1,0 +1,65 @@
+(rf-dict) Whistler:rf_dict yamrom$ python pipeline/sl_citation_stats.py --details --top_authors 
+Loading /Users/yamrom/work/rf_dict/SL/docs/Sophia_Lubensky_Dictionary 1.docx...
+  28305 paragraphs
+  6925 entries indexed
+  111 bibliography authors loaded
+
+=======================================================
+SL CITATION COVERAGE STATISTICS
+=======================================================
+Total entries analyzed:            6925
+
+With attributed examples:          4631  (66%)
+  — with ellipsis (...):           2933  (63% of attributed)
+  — without ellipsis:              1698  (36% of attributed)
+With unattributed examples:        1000  (14%)
+With any example:                  5631  (81%)
+No example at all:                 1294  (18%)
+
+Sample — attributed with ellipsis:
+  А-2 (Абрамов 1, 6 ellipses)
+  А-11 (Аржак 1, 4 ellipses)
+  А-12 (Аксёнов 7, 2 ellipses)
+  А-13 (Войнович 1, 4 ellipses)
+  А-14 (Гоголь 3, 2 ellipses)
+Sample — attributed without ellipsis:
+  А-4 (Акунин 5)
+  А-7 (Достоевский 2)
+  А-10 (Дудинцев 1)
+  А-19 (Войнович 2)
+  А-26 (Мандельштам 2)
+Sample — unattributed examples:
+  А-8
+  А-23
+  А-36
+  А-37
+  А-39
+Sample — no example:
+  А-1
+  А-3
+  А-5
+  А-6
+  А-9
+
+Most cited authors (top 20):
+  Войнович                   390
+  Искандер                   348
+  Булгаков                   299
+  Гоголь                     219
+  Толстой                    209
+  Чехов                      209
+  Максимов                   199
+  Шолохов                    192
+  Акунин                     185
+  Салтыков-Щедрин            170
+  Рыбаков                    158
+  Мандельштам                153
+  Абрамов                    147
+  Достоевский                144
+  Тургенев                   140
+  Пушкин                     138
+  Вампилов                   130
+  Солженицын                 127
+  Трифонов                   125
+  Зиновьев                   124
+  

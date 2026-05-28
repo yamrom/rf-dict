@@ -1,0 +1,24 @@
+{
+  "run_date": "2026-05-23",
+  "total_entries": 9,
+  "type_a": 9,
+  "type_b": 0,
+  "fr_idiom_db_size": 12,
+  "results": {
+    "Б-36": {"fr_idiom": "être en cavale", "score": 10, "register_note": "fam. — correct match"},
+    "Б-37": {"fr_idiom": "avoir la peau dure", "score": 9, "register_note": "cour. — good match"},
+    "Б-38": {"fr_idiom": "prendre ses jambes à son cou", "score": 9, "register_note": "cour. — good match"},
+    "Б-39": {"fr_idiom": "à la va-vite", "score": 10, "register_note": "fam. — correct match"},
+    "Б-40": {"fr_idiom": "autant être pendu pour un mouton que pour un agneau", "score": 9, "register_note": "prov. — correct match"},
+    "Б-41": {"fr_idiom": "un malheur ne vient jamais seul", "score": 10, "register_note": "prov. — perfect match"},
+    "Б-42": {"fr_idiom": "il n'y a que le premier pas qui coûte", "score": 10, "register_note": "⚠️ obsoles in RU — register mismatch"},
+    "Б-43": {"fr_idiom": "il n'y a que le premier pas qui coûte", "score": 10, "register_note": "prov. — correct match"},
+    "Б-44": {"fr_idiom": "ce n'est pas grave", "score": 10, "register_note": "cour. — correct, marginally idiomatic"}
+  },
+  "notes": [
+    "Seeded DB had exactly matching FR idioms — 9/9 expected",
+    "Real test: full CNRTL 2459 idioms — some entries will be Type B",
+    "Б-42 register mismatch needs human reviewer flag",
+    "Б-42 and Б-43 share same FR match — correct but worth noting"
+  ]
+}

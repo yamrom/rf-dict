@@ -85,8 +85,8 @@ LATEX_PREAMBLE = r"""
 % Section separator
 \newcommand{\sensesep}{\textbf{1.}\ }
 
-% Optional element marker ⟨ ⟩
-\newcommand{\optelem}[1]{⟨#1⟩}
+% Optional element marker < >
+\newcommand{\optelem}[1]{\textlangle #1\textrangle}
 
 % Synonymous variant separator
 \newcommand{\variantsep}{;\quad}
@@ -138,6 +138,8 @@ def escape_latex(text):
         ('←', r'$\leftarrow$'),
         ('⟨', r'\textlangle '),
         ('⟩', r'\textrangle '),
+        ('〈', r'\textlangle '),   # CJK left angle bracket U+3008
+        ('〉', r'\textrangle '),   # CJK right angle bracket U+3009
         ('<', r'\textless '),
         ('>', r'\textgreater '),
     ]
@@ -159,6 +161,8 @@ def render_head_matter(entry):
 
     # Entry number bullet + canonical headword
     canonical_text = get_text(entry, './/canonical/text')
+    if not canonical_text:
+        canonical_text = get_text(entry, './/canonical')
     optional_els = [e.text.strip() for e in 
                     entry.findall('.//canonical/optional_element') 
                     if e.text]
@@ -170,7 +174,9 @@ def render_head_matter(entry):
     lines.append(line)
 
     # Variants
-    variants = entry.findall('.//variant/text')
+    variants_old = entry.findall('.//variant/text')
+    variants_new = [e for e in entry.findall('.//variant') if not len(e)]
+    variants = variants_old if variants_old else variants_new
     if variants:
         var_texts = [escape_latex(v.text.strip()) for v in variants if v.text]
         var_line = "; ".join([f"\\headwordvar{{{v}}}" for v in var_texts])
@@ -196,6 +202,8 @@ PHRASE_TYPE_FR = {
 def render_grammar(entry):
     """Render grammatical information in brackets."""
     raw = get_text(entry, './/grammar/raw_grammar')
+    if not raw:
+        raw = get_text(entry, './/grammar/bracket')
     phrase_type = get_text(entry, './/grammar/phrase_type')
     form_restrictions = [e.text.strip() for e in 
                         entry.findall('.//grammar/form_restriction') 
@@ -281,10 +289,45 @@ def render_french_equivalents(sense):
     return " $|$ ".join(parts)
 
 def render_examples(sense):
-    """Render literary examples with citations."""
+    """Render literary examples with citations.
+    Supports both old schema (<ru>, <fr> children) and
+    new schema (<example lang="ru">, <example lang="fr">).
+    """
     examples = sense.findall('.//examples/example')
     if not examples:
         return ""
+
+    # New schema: collect by lang attribute
+    ru_ex = None
+    fr_ex = None
+    for ex in examples:
+        lang = ex.get('lang', '')
+        if lang == 'ru':
+            ru_ex = ex
+        elif lang == 'fr':
+            fr_ex = ex
+
+    # If new schema detected, build unified example block
+    if ru_ex is not None or fr_ex is not None:
+        ru_text   = get_text(ru_ex, 'sentence') if ru_ex is not None else ""
+        citation  = get_text(ru_ex, 'citation') if ru_ex is not None else ""
+        fr_text   = get_text(fr_ex, 'sentence') if fr_ex is not None else ""
+        fr_status = fr_ex.get('status', 'pending') if fr_ex is not None else 'pending'
+
+        status_marker = ""
+        if fr_status == 'pending':
+            status_marker = r" \textcolor{red}{[FR\,?]}"
+        elif fr_status == 'constructed':
+            status_marker = r" \textcolor{blue}{[forgé]}"
+
+        block = ""
+        if ru_text:
+            block += f"\n\\exbullet \\ruex{{{escape_latex(ru_text)}}}"
+            if citation:
+                block += f" \\srcite{{{escape_latex(citation)}}}"
+        if fr_text:
+            block += f"\n\\quad \\frex{{{escape_latex(fr_text)}}}{status_marker}"
+        return block
 
     lines = []
     for ex in examples:
@@ -361,8 +404,33 @@ def entry_to_latex(entry):
     if grammar:
         parts.append(grammar)
 
-    # Senses
+    # Senses — support both old schema (<sense>) and new schema (direct children)
     senses = entry.findall('sense')
+    if not senses:
+        # New schema: build a synthetic sense from french/examples
+        import xml.etree.ElementTree as ET2
+        sense = ET2.Element('sense')
+        # Copy french definition
+        french = entry.find('french')
+        if french is not None:
+            defn_el = french.find('definition')
+            if defn_el is not None and defn_el.text:
+                d = ET2.SubElement(sense, 'definition')
+                d.text = defn_el.text
+            # Add as french_equivalent
+            fe = ET2.SubElement(sense, 'french_equivalents')
+            eq = ET2.SubElement(fe, 'equiv')
+            eq.set('register', 'neutre')
+            t = ET2.SubElement(eq, 'text')
+            if defn_el is not None and defn_el.text:
+                t.text = defn_el.text
+        # Copy examples
+        examples_el = entry.find('examples')
+        if examples_el is not None:
+            exs = ET2.SubElement(sense, 'examples')
+            for ex in examples_el.findall('example'):
+                exs.append(ex)
+        senses = [sense]
     multi_sense = len(senses) > 1
 
     for i, sense in enumerate(senses, 1):
@@ -442,10 +510,14 @@ def xml_to_pdf(xml_file, output_pdf, keep_tex=False):
     tex_dir = os.path.dirname(os.path.abspath(tex_file))
     tex_base = os.path.basename(tex_file)
 
+    # Find xelatex — MacTeX installs to /Library/TeX/texbin/
+    import shutil
+    xelatex = shutil.which('xelatex') or '/Library/TeX/texbin/xelatex'
+
     for pass_num in range(1, 3):
         print(f"XeLaTeX pass {pass_num}...")
         result = subprocess.run(
-            ['xelatex', '-interaction=nonstopmode', tex_base],
+            [xelatex, '-interaction=nonstopmode', tex_base],
             cwd=tex_dir,
             capture_output=True,
             text=True

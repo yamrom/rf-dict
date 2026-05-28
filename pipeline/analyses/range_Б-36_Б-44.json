@@ -1,0 +1,420 @@
+{
+  "Б-36": {
+    "idiom": "в бегах",
+    "canonical_form": "в бега́х",
+    "phrase_type": "PrepP",
+    "subtype": null,
+    "grammar_bracket": "[PrepP; Invar; subj-compl with бытьø (subj: human)]",
+    "form_restriction": "Invar",
+    "syntactic_functions": [
+      "subj-compl"
+    ],
+    "copula": "бытьø",
+    "subject_type": "human",
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "prep only",
+      "number": "pl only",
+      "person": "any",
+      "tense_aspect": "any",
+      "finite": "all forms"
+    },
+    "negation": "normal",
+    "aspect": null,
+    "aspect_note": null,
+    "register": {
+      "temporal": null,
+      "stylistic": "coll",
+      "expressive": null
+    },
+    "has_literal_meaning": true,
+    "literal_meaning_note": "Literally 'in runs/flights', from the noun бега (archaic plural of бег 'running')",
+    "unique_lexical_component": true,
+    "archaic_component": true,
+    "archaic_note": "Uses archaic plural form бега́ instead of modern бе́ги",
+    "etymology": "folk",
+    "etymology_note": "From the archaic plural form бега́ meaning 'running, flight'; reflects older usage where this plural form was standard",
+    "ru_paraphrase": "Скрываться от преследования, находиться в бегстве от властей или правосудия. Человек живёт нелегально, постоянно меняя место пребывания, чтобы избежать ареста.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-36",
+    "all_forms": [
+      "в бегах"
+    ]
+  },
+  "Б-37": {
+    "idiom": "как бегемот",
+    "canonical_form": "как бегемо́т",
+    "phrase_type": "simile",
+    "subtype": "как+NP",
+    "grammar_bracket": "[simile; intensif Compar]",
+    "form_restriction": "Invar",
+    "syntactic_functions": [
+      "modif"
+    ],
+    "copula": null,
+    "subject_type": null,
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "nom only",
+      "number": "sing only",
+      "person": "any",
+      "tense_aspect": "any",
+      "finite": "all forms"
+    },
+    "negation": "normal",
+    "aspect": null,
+    "aspect_note": null,
+    "register": {
+      "temporal": null,
+      "stylistic": "coll",
+      "expressive": "humor"
+    },
+    "has_literal_meaning": true,
+    "literal_meaning_note": "Can be used literally to compare something to an actual hippopotamus",
+    "unique_lexical_component": false,
+    "archaic_component": false,
+    "archaic_note": null,
+    "etymology": null,
+    "etymology_note": null,
+    "ru_paraphrase": "Используется для характеристики чего-либо очень большого, тяжёлого, неповоротливого или неуклюжего по аналогии с массивным и медлительным животным — бегемотом. Может также указывать на крупные размеры тела человека.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-37",
+    "all_forms": [
+      "как бегемот",
+      "как носорог",
+      "как слон"
+    ]
+  },
+  "Б-38": {
+    "idiom": "спасаться/спастись бегством",
+    "canonical_form": "СПАСА́ТЬСЯ/СПАСТИ́СЬ БЕ́ГСТВОМ",
+    "phrase_type": "VP",
+    "subtype": null,
+    "grammar_bracket": "[VP; subj: human, collect, or animal; usu. this WO]",
+    "form_restriction": null,
+    "syntactic_functions": [
+      "predic"
+    ],
+    "copula": null,
+    "subject_type": "human, collect, or animal",
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "usu. this WO",
+    "defective_paradigm": {
+      "case": "any",
+      "number": "both",
+      "person": "any",
+      "tense_aspect": "any",
+      "finite": "all forms"
+    },
+    "negation": "normal",
+    "aspect": "both",
+    "aspect_note": "impfv спасаться describes the process of fleeing, pfv спастись indicates successful escape",
+    "register": {
+      "temporal": null,
+      "stylistic": "lit",
+      "expressive": null
+    },
+    "has_literal_meaning": false,
+    "literal_meaning_note": null,
+    "unique_lexical_component": true,
+    "archaic_component": false,
+    "archaic_note": null,
+    "etymology": null,
+    "etymology_note": null,
+    "ru_paraphrase": "Убегать или убежать от опасности, спасая свою жизнь или избегая неприятной ситуации. Покидать место быстро, чтобы избежать угрозы или нежелательных последствий.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-38",
+    "all_forms": [
+      "спасаться/спастись бегством",
+      "спасаться бегством",
+      "спастись бегством"
+    ]
+  },
+  "Б-39": {
+    "idiom": "на бегу",
+    "canonical_form": "НА БЕГУ́",
+    "phrase_type": "PrepP",
+    "subtype": "adverbial",
+    "grammar_bracket": "[PrepP; Invar; adv]",
+    "form_restriction": "Invar",
+    "syntactic_functions": [
+      "adv"
+    ],
+    "copula": null,
+    "subject_type": null,
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "prep only",
+      "number": "sing only",
+      "person": "any",
+      "tense_aspect": "any",
+      "finite": "all forms"
+    },
+    "negation": "normal",
+    "aspect": null,
+    "aspect_note": null,
+    "register": {
+      "temporal": null,
+      "stylistic": "coll",
+      "expressive": null
+    },
+    "has_literal_meaning": true,
+    "literal_meaning_note": "literally 'while running', used both literally (while physically running) and figuratively (while in a hurry, without stopping)",
+    "unique_lexical_component": false,
+    "archaic_component": false,
+    "archaic_note": null,
+    "etymology": null,
+    "etymology_note": null,
+    "ru_paraphrase": "Во время быстрого движения, спеша, второпях, не останавливаясь. Обычно о действиях, которые совершаются мимоходом, в спешке, без достаточного времени или внимания.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-39",
+    "all_forms": [
+      "на бегу"
+    ]
+  },
+  "Б-40": {
+    "idiom": "семь бед – один ответ",
+    "canonical_form": "семь бед – оди́н отве́т",
+    "phrase_type": "saying",
+    "subtype": "proverb",
+    "grammar_bracket": "[saying]",
+    "form_restriction": "Invar",
+    "syntactic_functions": [
+      "indep. sent"
+    ],
+    "copula": "null",
+    "subject_type": "null",
+    "object_type": "null",
+    "foll_by": "null",
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "nom only",
+      "number": "both",
+      "person": "any",
+      "tense_aspect": "any",
+      "finite": "all forms"
+    },
+    "negation": "no_negation",
+    "aspect": "null",
+    "aspect_note": "null",
+    "register": {
+      "temporal": "null",
+      "stylistic": "coll",
+      "expressive": "null"
+    },
+    "has_literal_meaning": false,
+    "literal_meaning_note": "null",
+    "unique_lexical_component": false,
+    "archaic_component": false,
+    "archaic_note": "null",
+    "etymology": "folk",
+    "etymology_note": "traditional Russian proverb expressing folk wisdom about risk-taking and consequences",
+    "ru_paraphrase": "Если уже совершено много проступков или нарушений, то наказание будет одно и то же, независимо от количества совершённых дел, поэтому можно рискнуть ещё раз. Используется для оправдания дополнительного риска, когда человек уже находится в трудной ситуации.",
+    "confidence": "high",
+    "confidence_note": "null",
+    "entry_id": "Б-40",
+    "all_forms": [
+      "семь бед – один ответ"
+    ]
+  },
+  "Б-41": {
+    "idiom": "беда в одиночку не ходит",
+    "canonical_form": "БЕДА́ В ОДИНО́ЧКУ НЕ ХО́ДИТ",
+    "phrase_type": "saying",
+    "subtype": "proverb",
+    "grammar_bracket": "[saying]",
+    "form_restriction": null,
+    "syntactic_functions": [
+      "indep. sent"
+    ],
+    "copula": null,
+    "subject_type": null,
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "any",
+      "number": "sing only",
+      "person": "3rd pers only",
+      "tense_aspect": "pres only",
+      "finite": "finite only"
+    },
+    "negation": "he_non_negative",
+    "aspect": "impfv only",
+    "aspect_note": null,
+    "register": {
+      "temporal": null,
+      "stylistic": "coll",
+      "expressive": null
+    },
+    "has_literal_meaning": false,
+    "literal_meaning_note": null,
+    "unique_lexical_component": false,
+    "archaic_component": false,
+    "archaic_note": null,
+    "etymology": "folk",
+    "etymology_note": "traditional folk saying expressing the observation that misfortunes tend to occur in succession",
+    "ru_paraphrase": "Если случилось одно несчастье, то обычно вскоре происходят и другие неприятности. Плохие события имеют тенденцию следовать одно за другим.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-41",
+    "all_forms": [
+      "беда в одиночку не ходит",
+      "беда не приходит 〈не ходит〉 одна",
+      "беда никогда не приходит 〈не ходит〉 одна",
+      "〈не ходит〉 одна",
+      "беда (никогда) не приходит одна",
+      "беда (никогда) не ходит одна"
+    ]
+  },
+  "Б-42": {
+    "idiom": "лиха беда",
+    "canonical_form": "ли́ха беда́",
+    "phrase_type": "NP",
+    "subtype": null,
+    "grammar_bracket": "[NP; Invar; subj-compl with бытьø (subj: infin or clause), pres only, or indep. sent]",
+    "form_restriction": "Invar",
+    "syntactic_functions": [
+      "subj-compl",
+      "indep. sent"
+    ],
+    "copula": "бытьø",
+    "subject_type": "infin",
+    "object_type": null,
+    "foll_by": "infin",
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "nom only",
+      "number": "sing only",
+      "person": "any",
+      "tense_aspect": "pres only",
+      "finite": "all forms"
+    },
+    "negation": "no_negation",
+    "aspect": null,
+    "aspect_note": null,
+    "register": {
+      "temporal": "old-fash",
+      "stylistic": "folk poet",
+      "expressive": null
+    },
+    "has_literal_meaning": true,
+    "literal_meaning_note": "Literally means 'evil/bad trouble', from genitive form лиха (gen. of лихо 'evil, trouble')",
+    "unique_lexical_component": true,
+    "archaic_component": true,
+    "archaic_note": "Contains archaic genitive form лиха from obsolete noun лихо 'evil, trouble, misfortune'",
+    "etymology": "folk",
+    "etymology_note": "Traditional folk expression, лихо is archaic word for trouble/misfortune",
+    "ru_paraphrase": "Самое трудное — это начать что-то делать, а потом дело пойдёт легче. Первый шаг самый сложный, но после него всё остальное станет проще.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-42",
+    "all_forms": [
+      "лиха беда"
+    ]
+  },
+  "Б-43": {
+    "idiom": "лиха беда начало 〈начать〉",
+    "canonical_form": "ЛИ́ХА БЕДА́ НАЧА́ЛО 〈НАЧА́ТЬ〉",
+    "phrase_type": "saying",
+    "subtype": "proverb",
+    "grammar_bracket": "[saying]",
+    "form_restriction": null,
+    "syntactic_functions": [
+      "indep. sent"
+    ],
+    "copula": null,
+    "subject_type": null,
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "any",
+      "number": "both",
+      "person": "any",
+      "tense_aspect": "any",
+      "finite": "all forms"
+    },
+    "negation": "no_negation",
+    "aspect": "both",
+    "aspect_note": "начало (neuter noun) and начать (perfective infinitive) are variants; начать emphasizes the action of starting",
+    "register": {
+      "temporal": null,
+      "stylistic": "coll",
+      "expressive": null
+    },
+    "has_literal_meaning": false,
+    "literal_meaning_note": null,
+    "unique_lexical_component": true,
+    "archaic_component": true,
+    "archaic_note": "лиха is genitive singular of archaic/poetic лихо (noun) meaning 'trouble, misfortune', not commonly used in modern Russian outside this idiom",
+    "etymology": "folk",
+    "etymology_note": "traditional Russian proverb; full form often continues 'а там и strada пойдет' or similar",
+    "ru_paraphrase": "Самое трудное — это начать какое-то дело, а после начала всё пойдёт легче. Первый шаг является самым сложным.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-43",
+    "all_forms": [
+      "лиха беда начало 〈начать〉",
+      "лиха беда начало",
+      "лиха беда начать"
+    ]
+  },
+  "Б-44": {
+    "idiom": "не беда",
+    "canonical_form": "не беда́",
+    "phrase_type": "NP",
+    "subtype": null,
+    "grammar_bracket": "[NP; Invar; subj-compl with бытьø (subj: usu. это or a clause), pres only, or indep. sent]",
+    "form_restriction": "Invar",
+    "syntactic_functions": [
+      "subj-compl",
+      "indep. sent"
+    ],
+    "copula": "бытьø",
+    "subject_type": "это or clause",
+    "object_type": null,
+    "foll_by": null,
+    "word_order": "fixed WO",
+    "defective_paradigm": {
+      "case": "nom only",
+      "number": "sing only",
+      "person": "any",
+      "tense_aspect": "pres only",
+      "finite": "all forms"
+    },
+    "negation": "he_non_negative",
+    "aspect": null,
+    "aspect_note": null,
+    "register": {
+      "temporal": null,
+      "stylistic": "coll",
+      "expressive": null
+    },
+    "has_literal_meaning": true,
+    "literal_meaning_note": "Literally means 'not a misfortune/trouble', but НЕ loses its negating force in the idiomatic use",
+    "unique_lexical_component": false,
+    "archaic_component": false,
+    "archaic_note": null,
+    "etymology": null,
+    "etymology_note": null,
+    "ru_paraphrase": "Это не страшно, не опасно, не представляет серьёзной проблемы. Можно легко справиться с этим или пережить это без больших последствий.",
+    "confidence": "high",
+    "confidence_note": null,
+    "entry_id": "Б-44",
+    "all_forms": [
+      "не беда"
+    ]
+  }
+}
